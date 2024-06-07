@@ -1,14 +1,18 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const Student = require("./models/student.model.js");
 const studentRoute = require("./routes/student.route.js");
 const app = express();
+const bodyParser = require("body-parser");
+const path = require("path");
 
 app.use(express.json());
+app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 
+app.use(express.static(path.join(__dirname, "public")));
+
 app.get("/", (req, res) => {
-  res.send("Hello from Node API");
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 app.use("/api/student", studentRoute);
